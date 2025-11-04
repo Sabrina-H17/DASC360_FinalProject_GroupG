@@ -1,0 +1,5 @@
+Add Headers to each section, for example add a header to initial findings, this can include changes needed for the data, interpreting the data using 1 or 2 Dimensional graphs, etc
+Add summaries to each header for easier readability and overall cleaness to the document
+When interpreting data using graphs, explain why we use the graph of choice, does it fit the specific data set that we are visualizing?
+
+Tip- You can go to RStudio and go to Project-> "report format" and edit the format of the document to fit the project report formatting
