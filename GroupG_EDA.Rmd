@@ -57,7 +57,7 @@ summary(StudentDep)
 ```{r}
 dim(StudentDep)
 ```
-We used boxplot to compare Academic Pressure and Study Satisfaction to in a One-Dimensional Graph
+We used boxplot to compare Academic Pressure and Study Satisfaction in  One-Dimensional Graphs
 ```{r}
 ggplot(StudentDep) + geom_bar(aes(x = Academic_Pressure))
 
@@ -120,13 +120,12 @@ Finding Covariance, Correlation, Scatter Plot Matrices. A issue faced would be t
 # Covariance Matrix
 Covar <- cov(Data)
 print("Covariance Matrix:")
-```
-```{r}
 Covar
 ```
+
 ```{r}
 # Correlation Matrix
-Corr <- cor(Data)
+Corr <- cor(Data, use = "pairwise.complete.obs")
 print("Correlation Matrix:")
 Corr
 ```
@@ -137,9 +136,9 @@ pairs(Data, pch = 19, main = "Scatter Plot")
 ```
 ```{r}
 # Correlation Plot
-corrplot(cor(Data), method = "square")
+corrplot(Corr,na.label = " ", method = "circle")
 ```
-The “???” are NA correlation values, this is because some of the rows can have the same values. We would need to remove, so we can get a better understanding on the correlation.
+We noticed that there is a strong correlation along the main diagonal of the correlation plot
 
 ```{r}
 pairs(Data, pch = 19, main = "Scatter matrix for outliers")
