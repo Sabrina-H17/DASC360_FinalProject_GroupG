@@ -169,3 +169,52 @@ Outliers
 ```
 
 When using the Mahalanobis distance and the use of scattterplots, we wanted to observe the correlation matrix and the outliers. We saw that certain variables may be weaker or stronger which depends between the variables. Also, can see that some extreme data points misshaped the strengths as well the binary variables caused the dataset to not look as appealing.
+
+
+
+```{r}
+# Predictor Variables
+X <- StudentDep[, c("Gender", "Age", "Academic_Pressure", "Work_Pressure", "CGPA", "Dietary_Habits", "Financial_Stress", "Family_History_of_Mental_Illness")]
+
+# Response Variables
+Y <- StudentDep[, c("Depression", "Study_Satisfaction", "Job_Satisfaction", "Sleep_Duration")]
+
+# Converting to numeric variables
+X[] <- lapply(X, function(col) as.numeric((col)))
+Y[] <- lapply(Y, function(col) as.numeric((col)))
+
+# Removing rows with NA
+X <- na.omit(X)
+Y <- na.omit(Y)
+
+# Keeping columns with zero variance
+vars <- sapply(X, var, na.rm = TRUE)
+X <- X[, vars > 0]
+varsY <- sapply(Y, var, na.rm = TRUE)
+Y <- Y[, !is.na(varsY) & varsY > 0]
+
+# Correlation matrices
+RX <- cor(X, use = "pairwise.complete.obs")
+
+
+# Eigenvalues
+EigX <- eigen(RX)
+
+
+EigX$values
+
+```
+
+We will be using the Principal Component Analysis to see if an oblique or orthogonal rotation will be necessary for this data set. We will be setting our intrinsic dimensionality to be 4 for the Predictors, note that we were not able to find the loading matrices for the response variables as they were returning 0 despite all attempts
+```{r}
+R <- pca(r = RX, nfactors = 4, rotate = "varimax")$loadings[]
+print("Orthogonal Rotation :")
+R
+
+R_1 <- pca(r = RX, nfactors = 4, rotate = "oblimin")$loadings[]
+
+print("Oblique Rotation :")
+R_1
+```
+
+

@@ -18,5 +18,37 @@ library(readr)
 
 student_depression_dataset_CSV <- read_csv("student_depression_dataset_CSV.csv")
 View(student_depression_dataset_CSV)
-```
 
+```
+```{r}
+StudentDep <- student_depression_dataset_CSV[1:70, c("Gender", "Age", "City", "Profession", "Academic_Pressure", "Work_Pressure", "CGPA", "Study_Satisfaction", "Job_Satisfaction", "Sleep_Duration", "Dietary_Habits", "Degree", "Suicidal_Thoughts", "Work/Study_Hours", "Financial_Stress", "Family_History_of_Mental_Illness", "Depression")]
+dim(StudentDep)
+```
+```{r}
+
+
+# Converting to numeric variables
+X[] <- lapply(X, function(col) as.numeric((col)))
+Y[] <- lapply(Y, function(col) as.numeric((col)))
+
+# Removing rows with NA
+X <- na.omit(X)
+Y <- na.omit(Y)
+
+# Keeping columns with zero variance
+vars <- sapply(X, var, na.rm = TRUE)
+X <- X[, vars > 0]
+varsY <- sapply(Y, var, na.rm = TRUE)
+Y <- Y[, !is.na(varsY) & varsY > 0]
+
+# Correlation matrices
+RX <- cor(X, use = "pairwise.complete.obs")
+
+
+# Eigenvalues
+EigX <- eigen(RX)
+
+
+EigX$values
+
+```
